@@ -6,12 +6,10 @@ var emptyRow = "<tr><td colspan='6' class='text-center'> No Records Available</t
         const name = $(this).parent().parent().find(".txtName").html();
         const item = $(this).parent().parent().find(".txtItem").html();
         const cost = $(this).parent().parent().find(".AmtCost").html();
-        // const total = qty * cost;
         const id = $(this).parent().parent().find(".txtName").attr("data-id");
         $("#txtName").val(name);
         $("#txtItem").val(item);
         $("#txtCost").val(cost);
-        // $("#txtAddress").val(total);
         $("#txtId").val(id);
         $("#btnSave").text("Update");
       });
@@ -32,9 +30,6 @@ var emptyRow = "<tr><td colspan='6' class='text-center'> No Records Available</t
       });
 
 
-      // $(`.btn-edit`).click(function(){
-
-      // });
 
       $("#btnClear").click(function () {
         debugger;
@@ -47,7 +42,6 @@ var emptyRow = "<tr><td colspan='6' class='text-center'> No Records Available</t
       $("#txtName").val("");
       $("#txtItem").val("");
       $("#txtCost").val("");
-      // $("#txtAddress").val("");
       $("#btnSave").text("Add");
     }
 
@@ -94,7 +88,6 @@ var emptyRow = "<tr><td colspan='6' class='text-center'> No Records Available</t
           name: $("#txtName").val(),
           item: $("#txtItem").val(),
           cost: $("#txtCost").val()
-          // address: $("#txtAddress").val()
         };
         localArray.push(obj);
         localStorage.setItem('localData', JSON.stringify(localArray));
@@ -106,7 +99,6 @@ var emptyRow = "<tr><td colspan='6' class='text-center'> No Records Available</t
           name: $("#txtName").val(),
           item: $("#txtItem").val(),
           cost: $("#txtCost").val()
-          // address: $("#txtAddress").val()
         };
         arryObj.push(obj);
         localStorage.setItem('localData', JSON.stringify(arryObj));
@@ -123,7 +115,6 @@ var emptyRow = "<tr><td colspan='6' class='text-center'> No Records Available</t
       oldRecord.name = $("#txtName").val();
       oldRecord.item = $("#txtItem").val();
       oldRecord.cost = $("#txtCost").val();
-      // oldRecord.address = $("#txtAddress").val();
       localStorage.setItem('localData', JSON.stringify(localArray));
       loadDataFromLocal();
       clearForm();

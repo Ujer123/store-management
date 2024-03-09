@@ -1,21 +1,4 @@
-/*// Assuming you have stored an array of objects in localStorage with the key 'localData'
-let localData = localStorage.getItem('localData');
 
-// Check if localData exists in localStorage
-if (localData) {
-  // Parse the JSON string to convert it back to an array of objects
-  let localArray = JSON.parse(localData);
-
-  // Now, you can access elements in the array
-  // For example, to get the first element's name
-  let firstName = localArray[0].name;
-
-  firstName  = document.getElementById('sales').innerHTML;
-
-  // alert(firstName);
-} else {
-  console.log('localData not found in localStorage');
-}*/
 
 $(document).ready(function () {
   // Function to calculate and update total quantity

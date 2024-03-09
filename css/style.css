@@ -1,9 +1,23 @@
 body{
-    background-color: white;
+    background: linear-gradient( to right, black, orange);
+    color: white;
     padding-top: 5%;
 }
 
 
 #Dashboard .box {
     margin-top: 10%;
+}
+
+.box{
+    border-radius: 50px !important;
+    align-items: center;
+    text-align: center;
+    font-size: small;
+}
+
+.box h2{
+    font-size: 30px;
+    text-align: center;
+    padding-top: 5px;
 }
