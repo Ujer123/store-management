@@ -46,3 +46,27 @@ $(document).ready(function () {
   // Call the function to update latest Sr No when the document is ready
   updateLatestSrNo();
 });
+
+
+$(document).ready(function () {
+    // Function to calculate and update latest Sr No
+    function updateTotalAmount() {
+        // Fetch data from local storage
+        let CustomerData = localStorage.getItem('CustomerData');
+        if (CustomerData) {
+            let localArray = JSON.parse(CustomerData);
+  
+            // Find the latest Sr No
+            let TotalSell = 0;
+            localArray.forEach(element => {
+                TotalSell += Math.max(TotalSell, parseInt(element.item * element.cost));
+            });
+  
+            // Update the placeholder with the latest Sr No
+            $("#TotalSell").text("Total Sales: " + TotalSell);
+        }
+    }
+  
+    // Call the function to update latest Sr No when the document is ready
+    updateTotalAmount();
+  });

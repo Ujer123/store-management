@@ -14,11 +14,11 @@
 
    <style>
     body{
+      background-color: aqua;
       padding-top: 100px;
     }
    </style>
    
-    <script src="https://kit.fontawesome.com/e6ade3949c.js" crossorigin="anonymous"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.js"></script>
 
@@ -30,8 +30,6 @@
     <!-- Include jsPDF -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 
-<!-- Include your existing script -->
-<script src="path/to/your/existing/script.js"></script>
 
 <!-- Include the new billGenerator.js file -->
 <script src="path/to/billGenerator.js"></script>
@@ -141,11 +139,11 @@
                           <tr>
                               <th>Sr No</th>
                               <th>Name</th>
-                              <th >Phone</th>
-                              <th >Item</th>
-                              <th >Cost</th>
-                              <th >Total</th>
-                              <th class="d-flex">Action</th>
+                              <th>Phone</th>
+                              <th>Item</th>
+                              <th>Cost</th>
+                              <th>Total</th>
+                              <th>Action</th>
                           </tr>
                       </thead>
 
@@ -163,7 +161,7 @@
                   <div class="d-flex justify-content-between">
                       <div>
                           <h2>Remarks</h2>
-                          <span>Sample PO Only</span>
+                          <span>Sample Project by ujer</span>
                       </div>
                       
                   </div>
@@ -193,7 +191,7 @@
                                           <label for="exampleInputQuantity">Name</label>
                                           <div class="input-group">
                                               <span class="input-group-text" id="basic-addon3"><span class="fas fa-envelope"></span></span>
-                                              <input id="txtName" type="text" class="form-control txt txtName" placeholder="Enter Quantity" required>
+                                              <input id="txtName" type="text" class="form-control txt txtName" placeholder="Enter Name" required>
                                               <!-- <input type="text" name="qty" class="form-control txt NoQTY" placeholder="Quantity" id=" txtQuantity" aria-describedby="exampleInputEmailModal2"> -->
                                               <input id="txtId" type="hidden" class="form-control txt">
                                           </div>  
@@ -245,15 +243,6 @@
 
 
 
-
-<!-- <button onclick="sendWhatsAppMessage()" id="customerNumberInput"><i class="fa-brands fa-whatsapp"></i></button> -->
-
-
-
-
-
-<!-- <button id="generateBillBtn">Generate Bill</button> -->
-<!-- <div id="billContainer"></div> -->
 
 
     <script src="./js/script2.js"></script>

@@ -1,6 +1,8 @@
 body{
-    background-color: white;
+    background: linear-gradient( to right, rgb(9, 169, 218), white);
+    
     padding-top: 5%;
+
 }
 
 .container{

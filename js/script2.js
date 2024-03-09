@@ -74,7 +74,7 @@ var emptyRow = "<tr><td colspan='6' class='text-center'> No Records Available</t
           dynamicTR = dynamicTR + "        <button class='btn btn-sm btn-success btn-edit'> Edit</button>";
           dynamicTR = dynamicTR + "        <button class='btn btn-sm btn-danger btn-delete'> Delete</button>";
           dynamicTR = dynamicTR + "    </td>";
-          dynamicTR = dynamicTR + "    <td class='tdBill align-center'>";
+          dynamicTR = dynamicTR + "    <td class='tdBill align-center '>";
           dynamicTR = dynamicTR + "        <button id='generateBillBtn'> Generate</button>";
           dynamicTR = dynamicTR + "        <div id='billContainer' ></div>";
           dynamicTR = dynamicTR + "    </td>";
@@ -150,7 +150,13 @@ var emptyRow = "<tr><td colspan='6' class='text-center'> No Records Available</t
 
 
     function generateBillPdf(rowData) {
+
+      const currentDate = new Date();
+    const formattedDateTime = currentDate.toLocaleString();
+
       let billHTML = "<h2>Invoice</h2>";
+      billHTML += `<p>Date and Time: ${formattedDateTime}</p>`;
+      
       billHTML += "<table class='w-100 table table-striped-columns'>";
       billHTML += "<tr><th>Quantity</th><th>Item</th><th>Cost</th><th>Total</th></tr>";
   
