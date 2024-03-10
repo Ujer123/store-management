@@ -205,18 +205,20 @@ var emptyRow = "<tr><td colspan='6' class='text-center'> No Records Available</t
 });
 
 // Modified sendWhatsAppMessage function to accept a phone number
-function sendWhatsAppMessage(phoneNumber) {
+/*function sendWhatsAppMessage(phoneNumber) {
     // Check if a phone number is provided
     if (!phoneNumber) {
         alert('Please enter a customer phone number.');
         return;
     }
 
+    // const phoneNumber = 
+
     // Replace 'Hello%20World' with the message you want to send
-    const message = 'Hello%20World';
+    const message = 'Hello World';
 
     // Construct the WhatsApp URL
-    const whatsappUrl = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${message}`;
+    const whatsappUrl = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`;
 
     // Create an anchor element
     const link = document.createElement('a');
@@ -229,4 +231,52 @@ function sendWhatsAppMessage(phoneNumber) {
 
     // Simulate a click on the anchor element
     link.click();
+}*/
+
+
+
+// Modified sendWhatsAppMessage function to accept a phone number and row data
+function sendWhatsAppMessage(phoneNumber, rowData) {
+  // Check if a phone number is provided
+  if (!phoneNumber) {
+      alert('Please enter a customer phone number.');
+      return;
+  }
+
+  // Create a message using row data
+  const message = `Name: ${rowData.name}\nItem: ${rowData.item}\nCost: ${rowData.cost}\nTotal: ${rowData.item * rowData.cost}`;
+
+  // Construct the WhatsApp URL
+  const whatsappUrl = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`;
+
+  // Create an anchor element
+  const link = document.createElement('a');
+
+  // Set the href attribute to the WhatsApp URL
+  link.href = whatsappUrl;
+
+  // Set the target attribute to '_blank' to open in a new window or tab
+  link.target = '_blank';
+
+  // Simulate a click on the anchor element
+  link.click();
 }
+
+// Example usage when calling the function
+$(document).ready(function () {
+  $('#tblData').on('click', '.btn-whatsapp', function () {
+      const phone = $(this).closest('tr').find(".txtNum").html();
+      const rowIndex = $(this).closest('tr').index();
+      let CustomerData = localStorage.getItem('CustomerData');
+      if (CustomerData) {
+          let localArray = JSON.parse(CustomerData);
+          if (rowIndex >= 0 && rowIndex < localArray.length) {
+              sendWhatsAppMessage(phone, localArray[rowIndex]);
+          } else {
+              alert('Invalid row index.');
+          }
+      } else {
+          alert('No data available to send a WhatsApp message.');
+      }
+  });
+});
