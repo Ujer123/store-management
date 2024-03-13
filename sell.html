@@ -17,6 +17,10 @@
       background-color: aqua;
       padding-top: 100px;
     }
+
+    table, th, td {
+    border: 1px solid black;
+  }
    </style>
    
 
@@ -126,7 +130,13 @@
 <section>
   <div class="container">
       <div class="row">
+        <div class="d-flex  justify-content-between">
+
+          <h2>Customer Details</h2>
+          <input type="text" id="searchInput" placeholder="Search">
           
+        </div>
+          <hr>
           <div class="col">
              
 
@@ -140,10 +150,11 @@
                               <th>Sr No</th>
                               <th>Name</th>
                               <th>Phone</th>
-                              <th>Item</th>
+                              <th>Quantity</th>
                               <th>Cost</th>
                               <th>Total</th>
                               <th>Action</th>
+                              <th>Bill</th>
                           </tr>
                       </thead>
 
@@ -206,7 +217,7 @@
                                             </div>  
                                         </div>
                                         <div class="form-group mb-4">
-                                            <label for="exampleInputItem">Item</label>
+                                            <label for="exampleInputItem">Quantity</label>
                                             <div class="input-group">
                                                 <span class="input-group-text" id="basic-addon4"><span class="fas fa-unlock-alt"></span></span>
                                                 <input type="text" name="item" placeholder="item" class="form-control txtItem1" id="txtItem1" aria-describedby="exampleInputPasswordModal3">
@@ -220,6 +231,22 @@
                                                 <input type="number" name="cost" placeholder="cost" class="form-control AmtCost" id="txtCost" aria-describedby="exampleInputPasswordModal4">
                                             </div>  
                                         </div>
+
+
+                                        <div id="moreHiddenInputs" style="display: none;">
+                                          <div class="form-group mb-4">
+                                              <label for="exampleInputAdditional">Quantity</label>
+                                              <input type="text" name="additional" placeholder="Quantity " class="form-control additionalInput" id="additionalInput">
+                                          </div>
+                                      </div>
+
+                                        <div id="moreHiddenInputs1" style="display: none;">
+                                          <div class="form-group mb-4">
+                                              <label for="exampleInputAdditional">Cost</label>
+                                              <input type="text" name="additional" placeholder="Cost" class="form-control additionalInput1" id="additionalInput1">
+                                          </div>
+                                      </div>
+                                      <button type="button" class="btn btn-primary" id="showMoreInputs">+</button>
                                        
                                     </div>
                                     <div class="d-grid d-flex justify-content-between">

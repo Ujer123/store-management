@@ -7,11 +7,15 @@ var emptyRow = "<tr><td colspan='6' class='text-center'> No Records Available</t
         const phone = $(this).parent().parent().find(".txtNum").html();
         const item = $(this).parent().parent().find(".txtItem1").html();
         const cost = $(this).parent().parent().find(".AmtCost").html();
+        const qty = $(this).parent().parent().find(".additionalInput").html();
+        const cost1 = $(this).parent().parent().find(".additionalInput1").html();
         const id = $(this).parent().parent().find(".txtName").attr("data-id");
         $("#txtName").val(name);
         $("#txtNum").val(phone);
         $("#txtItem1").val(item);
         $("#txtCost").val(cost);
+        $("#additionalInput").val(qty);
+        $("#additionalInput1").val(cost1);
         $("#txtId").val(id);
         $("#btnSave").text("Update");
       });
@@ -45,6 +49,8 @@ var emptyRow = "<tr><td colspan='6' class='text-center'> No Records Available</t
       $("#txtNum").val("");
       $("#txtItem1").val("");
       $("#txtCost").val("");
+      $("#additionalInput").val("");
+      $("#additionalInput1").val("");
       $("#btnSave").text("Add");
     }
 
@@ -62,42 +68,96 @@ var emptyRow = "<tr><td colspan='6' class='text-center'> No Records Available</t
         $("#tblData tbody").html("");
         let localArray = JSON.parse(CustomerData);
         let index = 1;
+        let searchQuery = $("#searchInput").val().toLowerCase();
         localArray.forEach(element => {
           let dynamicTR = "<tr>";
           dynamicTR = dynamicTR + "<td> " + index + "</td>";
           dynamicTR = dynamicTR + "<td class='txtName'  data-id=" + element.id + ">" + element.name + "</td>";
           dynamicTR = dynamicTR + "<td class='txtNum'>" + element.phone + "</td>";
-          dynamicTR = dynamicTR + "<td class='txtItem'>" + element.item + "</td>";
-          dynamicTR = dynamicTR + "<td class='AmtCost'>" + element.cost + "</td>";
-          dynamicTR += "<td class='Result'>" + (element.item * element.cost) + "</td>";
+          dynamicTR = dynamicTR + "<td class='txtItem'>" + (parseFloat(element.item) + parseFloat(element.qty || 0))  + "</td>";
+          dynamicTR = dynamicTR + "<td class='AmtCost'>" + (parseFloat(element.cost) + parseFloat(element.cost1 || 0)) + "</td>";
+          dynamicTR += "<td class='Result'>" + ((parseFloat(element.item) + parseFloat(element.qty || 0)) * (parseFloat(element.cost) + parseFloat(element.cost1 || 0))) + "</td>";
           dynamicTR = dynamicTR + "    <td class='tdAction text-center'>";
-          dynamicTR = dynamicTR + "        <button class='btn btn-sm btn-success btn-edit'> Edit</button>";
-          dynamicTR = dynamicTR + "        <button class='btn btn-sm btn-danger btn-delete'> Delete</button>";
+          dynamicTR = dynamicTR + "        <button class='btn btn-sm btn-success btn-edit'> Edit</button><br>";
+          dynamicTR = dynamicTR + "        <button class='btn btn-sm mt-2 btn-danger btn-delete'> Delete</button>";
           dynamicTR = dynamicTR + "    </td>";
           dynamicTR = dynamicTR + "    <td class='tdBill align-center '>";
           dynamicTR = dynamicTR + "        <button id='generateBillBtn'> Generate</button>";
           dynamicTR = dynamicTR + "        <div id='billContainer' ></div>";
+          dynamicTR = dynamicTR + "        <button class='btn btn-sm btn-primary mt-2 btn-whatsapp'> WhatsApp</button>";
           dynamicTR = dynamicTR + "    </td>";
-          dynamicTR += "<td><button class='btn btn-sm btn-primary btn-whatsapp'> WhatsApp</button></td>";
+          // dynamicTR += "<td><button class='btn btn-sm btn-primary btn-whatsapp'> WhatsApp</button></td>";
           dynamicTR = dynamicTR + " </tr>";
+          if (element.name.toLowerCase().includes(searchQuery) || element.phone.includes(searchQuery)) {
           $("#tblData tbody").append(dynamicTR);
           index++;
+          }
         });
       }
       addEmptyRow();
     }
 
+    // function addDataToLocal() {
+    //   debugger;
+    //   let CustomerData = localStorage.getItem('CustomerData');
+    //   if (CustomerData) {
+    //     let localArray = JSON.parse(CustomerData);
+    //     const obj = {
+    //       id: localArray.length + 1,
+    //       name: $("#txtName").val(),
+    //       phone: $("#txtNum").val(),
+    //       item: $("#txtItem1").val(),
+    //       cost: $("#txtCost").val(),
+    //       qty: $("#additionalInput").val(),
+    //       cost1: $("#additionalInput1").val()
+    //     };
+    //     localArray.push(obj);
+    //     localStorage.setItem('CustomerData', JSON.stringify(localArray));
+    //     loadDataFromLocal();
+    //   } else {
+    //     const arryObj = [];
+    //     const obj = {
+    //       id: 1,
+    //       name: $("#txtName").val(),
+    //       phone: $("#txtNum").val(),
+    //       item: $("#txtItem1").val(),
+    //       cost: $("#txtCost").val(),
+    //       qty: $("#additionalInput").val(),
+    //       cost1: $("#additionalInput1").val()
+    //     };
+    //     arryObj.push(obj);
+    //     localStorage.setItem('CustomerData', JSON.stringify(arryObj));
+    //     loadDataFromLocal();
+    //   }
+    //   clearForm();
+    // }
+
+
     function addDataToLocal() {
-      debugger;
+      // Retrieve values from input fields
+      const name = $("#txtName").val().trim();
+      const phone = $("#txtNum").val().trim();
+      const item = $("#txtItem1").val().trim();
+      const cost = $("#txtCost").val().trim();
+    
+      // Check if required fields are filled
+      if (name === '' || phone === '' || item === '' || cost === '') {
+        alert('Please fill in all required fields (Name, Phone, Item, Cost) before adding to the table.');
+        return;
+      }
+    
+      // Proceed to add data if all required fields are filled
       let CustomerData = localStorage.getItem('CustomerData');
       if (CustomerData) {
         let localArray = JSON.parse(CustomerData);
         const obj = {
           id: localArray.length + 1,
-          name: $("#txtName").val(),
-          phone: $("#txtNum").val(),
-          item: $("#txtItem1").val(),
-          cost: $("#txtCost").val()
+          name: name,
+          phone: phone,
+          item: item,
+          cost: cost,
+          qty: $("#additionalInput").val(),
+          cost1: $("#additionalInput1").val()
         };
         localArray.push(obj);
         localStorage.setItem('CustomerData', JSON.stringify(localArray));
@@ -106,10 +166,12 @@ var emptyRow = "<tr><td colspan='6' class='text-center'> No Records Available</t
         const arryObj = [];
         const obj = {
           id: 1,
-          name: $("#txtName").val(),
-          phone: $("#txtNum").val(),
-          item: $("#txtItem1").val(),
-          cost: $("#txtCost").val()
+          name: name,
+          phone: phone,
+          item: item,
+          cost: cost,
+          qty: $("#additionalInput").val(),
+          cost1: $("#additionalInput1").val()
         };
         arryObj.push(obj);
         localStorage.setItem('CustomerData', JSON.stringify(arryObj));
@@ -117,6 +179,7 @@ var emptyRow = "<tr><td colspan='6' class='text-center'> No Records Available</t
       }
       clearForm();
     }
+    
 
     function updateDataFromLocal() {
       debugger;
@@ -127,6 +190,8 @@ var emptyRow = "<tr><td colspan='6' class='text-center'> No Records Available</t
       oldRecord.phone = $("#txtNum").val();
       oldRecord.item = $("#txtItem1").val();
       oldRecord.cost = $("#txtCost").val();
+      oldRecord.qty = $("#additionalInput").val();
+      oldRecord.cost1 = $("#additionalInput1").val();
       localStorage.setItem('CustomerData', JSON.stringify(localArray));
       loadDataFromLocal();
       clearForm();
@@ -158,7 +223,7 @@ var emptyRow = "<tr><td colspan='6' class='text-center'> No Records Available</t
       billHTML += `<p>Date and Time: ${formattedDateTime}</p>`;
       
       billHTML += "<table class='w-100 table table-striped-columns'>";
-      billHTML += "<tr><th>Quantity</th><th>Item</th><th>Cost</th><th>Total</th></tr>";
+      billHTML += "<tr><th>Name</th><th>Quantity</th><th>Cost</th><th>Total</th></tr>";
   
       billHTML += "<tr>";
       billHTML += "<td>" + rowData.name + "</td>";
@@ -204,34 +269,7 @@ var emptyRow = "<tr><td colspan='6' class='text-center'> No Records Available</t
     sendWhatsAppMessage(phone);
 });
 
-// Modified sendWhatsAppMessage function to accept a phone number
-/*function sendWhatsAppMessage(phoneNumber) {
-    // Check if a phone number is provided
-    if (!phoneNumber) {
-        alert('Please enter a customer phone number.');
-        return;
-    }
 
-    // const phoneNumber = 
-
-    // Replace 'Hello%20World' with the message you want to send
-    const message = 'Hello World';
-
-    // Construct the WhatsApp URL
-    const whatsappUrl = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`;
-
-    // Create an anchor element
-    const link = document.createElement('a');
-
-    // Set the href attribute to the WhatsApp URL
-    link.href = whatsappUrl;
-
-    // Set the target attribute to '_blank' to open in a new window or tab
-    link.target = '_blank';
-
-    // Simulate a click on the anchor element
-    link.click();
-}*/
 
 
 
@@ -278,5 +316,21 @@ $(document).ready(function () {
       } else {
           alert('No data available to send a WhatsApp message.');
       }
+  });
+});
+
+
+$(document).ready(function () {
+  // Function to toggle the visibility of more hidden inputs when the button is clicked
+  $('#showMoreInputs').click(function () {
+      $('#moreHiddenInputs, #moreHiddenInputs1').toggle();
+  });
+});
+
+
+
+$(document).ready(function () {
+  $("#searchInput").on('input', function () {
+      loadDataFromLocal(); // Call the function on input
   });
 });

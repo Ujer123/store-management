@@ -8,6 +8,7 @@ body{
 .container{
     border: 1px solid black;
     border-top: 2px solid green;
+    
 }
 
 table, th, td {
@@ -17,3 +18,13 @@ table, th, td {
  .container footer{
     bottom: 0;
   }
+
+
+  @media only screen and (max-width: 600px){
+    .container{
+        padding-top: 30%;
+    }
+  }
+
+
+ 
