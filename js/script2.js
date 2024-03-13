@@ -5,6 +5,7 @@ var emptyRow = "<tr><td colspan='6' class='text-center'> No Records Available</t
         debugger;
         const name = $(this).parent().parent().find(".txtName").html();
         const phone = $(this).parent().parent().find(".txtNum").html();
+        const item1 = $(this).parent().parent().find(".txtItem").html();
         const item = $(this).parent().parent().find(".txtItem1").html();
         const cost = $(this).parent().parent().find(".AmtCost").html();
         const qty = $(this).parent().parent().find(".additionalInput").html();
@@ -12,6 +13,7 @@ var emptyRow = "<tr><td colspan='6' class='text-center'> No Records Available</t
         const id = $(this).parent().parent().find(".txtName").attr("data-id");
         $("#txtName").val(name);
         $("#txtNum").val(phone);
+        $("#txtItem").val(item1);
         $("#txtItem1").val(item);
         $("#txtCost").val(cost);
         $("#additionalInput").val(qty);
@@ -47,6 +49,7 @@ var emptyRow = "<tr><td colspan='6' class='text-center'> No Records Available</t
       debugger;
       $("#txtName").val("");
       $("#txtNum").val("");
+      $("#txtItem").val("");
       $("#txtItem1").val("");
       $("#txtCost").val("");
       $("#additionalInput").val("");
@@ -74,7 +77,8 @@ var emptyRow = "<tr><td colspan='6' class='text-center'> No Records Available</t
           dynamicTR = dynamicTR + "<td> " + index + "</td>";
           dynamicTR = dynamicTR + "<td class='txtName'  data-id=" + element.id + ">" + element.name + "</td>";
           dynamicTR = dynamicTR + "<td class='txtNum'>" + element.phone + "</td>";
-          dynamicTR = dynamicTR + "<td class='txtItem'>" + (parseFloat(element.item) + parseFloat(element.qty || 0))  + "</td>";
+          dynamicTR = dynamicTR + "<td class='txtItem'>" + element.item1 + "</td>";
+          dynamicTR = dynamicTR + "<td class='txtItem1'>" + (parseFloat(element.item) + parseFloat(element.qty || 0))  + "</td>";
           dynamicTR = dynamicTR + "<td class='AmtCost'>" + (parseFloat(element.cost) + parseFloat(element.cost1 || 0)) + "</td>";
           dynamicTR += "<td class='Result'>" + ((parseFloat(element.item) + parseFloat(element.qty || 0)) * (parseFloat(element.cost) + parseFloat(element.cost1 || 0))) + "</td>";
           dynamicTR = dynamicTR + "    <td class='tdAction text-center'>";
@@ -137,11 +141,12 @@ var emptyRow = "<tr><td colspan='6' class='text-center'> No Records Available</t
       // Retrieve values from input fields
       const name = $("#txtName").val().trim();
       const phone = $("#txtNum").val().trim();
+      const item1 = $("#txtItem").val().trim();
       const item = $("#txtItem1").val().trim();
       const cost = $("#txtCost").val().trim();
     
       // Check if required fields are filled
-      if (name === '' || phone === '' || item === '' || cost === '') {
+      if (name === '' || phone === '' || item1 === '' || item === '' || cost === '') {
         alert('Please fill in all required fields (Name, Phone, Item, Cost) before adding to the table.');
         return;
       }
@@ -154,6 +159,7 @@ var emptyRow = "<tr><td colspan='6' class='text-center'> No Records Available</t
           id: localArray.length + 1,
           name: name,
           phone: phone,
+          item1: item1,
           item: item,
           cost: cost,
           qty: $("#additionalInput").val(),
@@ -168,6 +174,7 @@ var emptyRow = "<tr><td colspan='6' class='text-center'> No Records Available</t
           id: 1,
           name: name,
           phone: phone,
+          item1: item1,
           item: item,
           cost: cost,
           qty: $("#additionalInput").val(),
@@ -188,6 +195,7 @@ var emptyRow = "<tr><td colspan='6' class='text-center'> No Records Available</t
       const oldRecord = localArray.find(m => m.id == $("#txtId").val());
       oldRecord.name = $("#txtName").val();
       oldRecord.phone = $("#txtNum").val();
+      oldRecord.item1 = $("#txtItem").val();
       oldRecord.item = $("#txtItem1").val();
       oldRecord.cost = $("#txtCost").val();
       oldRecord.qty = $("#additionalInput").val();
@@ -223,10 +231,11 @@ var emptyRow = "<tr><td colspan='6' class='text-center'> No Records Available</t
       billHTML += `<p>Date and Time: ${formattedDateTime}</p>`;
       
       billHTML += "<table class='w-100 table table-striped-columns'>";
-      billHTML += "<tr><th>Name</th><th>Quantity</th><th>Cost</th><th>Total</th></tr>";
+      billHTML += "<tr><th>Name</th><th>Item</th><th>Quantity</th><th>Cost</th><th>Total</th></tr>";
   
       billHTML += "<tr>";
       billHTML += "<td>" + rowData.name + "</td>";
+      billHTML += "<td>" + rowData.item1 + "</td>";
       billHTML += "<td>" + rowData.item + "</td>";
       billHTML += "<td>" + rowData.cost + "</td>";
       billHTML += "<td>" + (rowData.item * rowData.cost) + "</td>";  // Corrected variable name to 'phone'
@@ -282,7 +291,7 @@ function sendWhatsAppMessage(phoneNumber, rowData) {
   }
 
   // Create a message using row data
-  const message = `Name: ${rowData.name}\nItem: ${rowData.item}\nCost: ${rowData.cost}\nTotal: ${rowData.item * rowData.cost}`;
+  const message = `Name: ${rowData.name}\nItem: ${rowData.item1}\nQuantity: ${rowData.item}\nCost: ${rowData.cost}\nTotal: ${rowData.item * rowData.cost}`;
 
   // Construct the WhatsApp URL
   const whatsappUrl = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`;
